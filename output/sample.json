@@ -1,0 +1,53 @@
+{
+    "image_path": "data/sample.jpg",
+    "elements": [
+        {
+            "box_2d": [
+                50,
+                50,
+                200,
+                50
+            ],
+            "class_id": "Title",
+            "language": "en",
+            "text": "This is a title.",
+            "description": ""
+        },
+        {
+            "box_2d": [
+                50,
+                120,
+                400,
+                200
+            ],
+            "class_id": "Text",
+            "language": "en",
+            "text": "This is a paragraph of text.",
+            "description": ""
+        },
+        {
+            "box_2d": [
+                50,
+                350,
+                300,
+                150
+            ],
+            "class_id": "Table",
+            "language": "en",
+            "text": "",
+            "description": "This is a summary of the table."
+        },
+        {
+            "box_2d": [
+                500,
+                100,
+                250,
+                200
+            ],
+            "class_id": "Figure",
+            "language": "en",
+            "text": "",
+            "description": "This is a description of the figure."
+        }
+    ]
+}
