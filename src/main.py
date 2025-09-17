@@ -2,10 +2,12 @@ import argparse
 import os
 from region_detection import detect_regions
 from output_schema import create_json_output
+from translation import translate_text
 
 def main():
     parser = argparse.ArgumentParser(description="Intelligent Document Understanding Pipeline")
     parser.add_argument("image_path", help="Path to the input document image.")
+    parser.add_argument("--language", default="en", help="The language to translate the text to.")
     args = parser.parse_args()
 
     if not os.path.exists(args.image_path):
@@ -25,8 +27,15 @@ def main():
         3: "This is a description of the figure.",
     }
 
+    # Stage 2: Translation
+    if args.language != "en":
+        for i in ocr_results:
+            ocr_results[i] = translate_text(ocr_results[i], args.language)
+        for i in descriptions:
+            descriptions[i] = translate_text(descriptions[i], args.language)
+
     # Generate JSON output
-    json_output = create_json_output(args.image_path, regions, ocr_results, descriptions)
+    json_output = create_json_output(args.image_path, regions, ocr_results, descriptions, args.language)
 
     # Save the output
     output_filename = os.path.splitext(os.path.basename(args.image_path))[0] + ".json"
