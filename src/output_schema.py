@@ -1,6 +1,6 @@
 import json
 
-def create_json_output(image_path, regions, ocr_results, descriptions):
+def create_json_output(image_path, regions, ocr_results, descriptions, language="en"):
     """
     Creates the JSON output file with the specified schema.
     """
@@ -11,11 +11,11 @@ def create_json_output(image_path, regions, ocr_results, descriptions):
 
     for i, region in enumerate(regions):
         element = {
-            "box_2d": region["box"],
-            "class_id": region["label"],
-            "language": "en",  # Placeholder
-            "text": ocr_results.get(i, ""),  # Placeholder
-            "description": descriptions.get(i, "")  # Placeholder
+            "bounding_box": region["box"],
+            "region_type": region["label"],
+            "language": language,
+            "text": ocr_results.get(i, ""),
+            "description": descriptions.get(i, "")
         }
         output["elements"].append(element)
 

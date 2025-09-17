@@ -2,52 +2,52 @@
     "image_path": "data/sample.jpg",
     "elements": [
         {
-            "box_2d": [
+            "bounding_box": [
                 50,
                 50,
                 200,
                 50
             ],
-            "class_id": "Title",
-            "language": "en",
-            "text": "This is a title.",
+            "region_type": "Title",
+            "language": "es",
+            "text": "Este es un t\u00edtulo.",
             "description": ""
         },
         {
-            "box_2d": [
+            "bounding_box": [
                 50,
                 120,
                 400,
                 200
             ],
-            "class_id": "Text",
-            "language": "en",
-            "text": "This is a paragraph of text.",
+            "region_type": "Text",
+            "language": "es",
+            "text": "Este es un p\u00e1rrafo de texto.",
             "description": ""
         },
         {
-            "box_2d": [
+            "bounding_box": [
                 50,
                 350,
                 300,
                 150
             ],
-            "class_id": "Table",
-            "language": "en",
+            "region_type": "Table",
+            "language": "es",
             "text": "",
-            "description": "This is a summary of the table."
+            "description": "Este es un resumen de la mesa."
         },
         {
-            "box_2d": [
+            "bounding_box": [
                 500,
                 100,
                 250,
                 200
             ],
-            "class_id": "Figure",
-            "language": "en",
+            "region_type": "Figure",
+            "language": "es",
             "text": "",
-            "description": "This is a description of the figure."
+            "description": "Esta es una descripci\u00f3n de la figura."
         }
     ]
 }
