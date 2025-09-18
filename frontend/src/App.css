@@ -1,66 +1,78 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #f0f2f5;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #000000;
+  color: #FFFFFF;
 }
 
 .App {
-  text-align: center;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  min-height: 100vh;
+}
+
+.App-header {
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #333;
 }
 
 h1 {
   font-size: 2.5rem;
-  margin-bottom: 20px;
+  margin: 0;
 }
 
-.input-container {
-  margin-bottom: 20px;
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-grow: 1;
 }
 
-#language-input {
+.panel {
+  width: 50%;
+  padding: 20px;
+  border-left: 1px solid #333;
+  overflow-y: auto;
+}
+
+.panel:first-child {
+  border-left: none;
+}
+
+.upload-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+input[type="file"] {
+  margin-bottom: 20px;
+  border: 1px solid #333;
   padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 10px;
 }
 
 button {
   padding: 10px 20px;
   font-size: 1rem;
-  border: none;
+  border: 1px solid #FFFFFF;
   border-radius: 4px;
-  background-color: #61dafb;
-  color: #282c34;
+  background-color: #000000;
+  color: #FFFFFF;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 button:hover {
-  background-color: #4fa3d1;
+  background-color: #FFFFFF;
+  color: #000000;
 }
 
-.translation-container {
-  margin-top: 20px;
-}
-
-.translated-text {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #61dafb;
+.translation-output {
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }

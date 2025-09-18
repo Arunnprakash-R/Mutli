@@ -1,64 +1,78 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [language, setLanguage] = useState('es');
   const [translatedText, setTranslatedText] = useState('');
   const [error, setError] = useState('');
+  const [downloadPath, setDownloadPath] = useState('');
 
-  const fetchTranslation = async (lang) => {
-    try {
-      const response = await fetch(`http://localhost:5000/translate?text=Welcome&lang=${lang}`);
-      const data = await response.json();
-      if (response.ok) {
-        setTranslatedText(data.translated_text);
-        setError('');
-      } else {
-        setError(data.error || 'An error occurred.');
-        setTranslatedText('');
-      }
-    } catch (error) {
-      console.error("Error fetching translation:", error);
-      setError("Error fetching translation. Make sure the backend server is running.");
-      setTranslatedText('');
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    if (!file) {
+      return;
     }
-  };
 
-  useEffect(() => {
-    fetchTranslation(language);
-  }, [language]);
+    const formData = new FormData();
+    formData.append('file', file);
 
-  const handleTranslate = () => {
-    const langInput = document.getElementById('language-input');
-    if (langInput) {
-      setLanguage(langInput.value);
+    try {
+      const uploadResponse = await fetch('http://localhost:5000/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!uploadResponse.ok) {
+        throw new Error('File upload failed');
+      }
+
+      const uploadData = await uploadResponse.json();
+      const { filepath } = uploadData;
+
+      // Now, call translation endpoint
+      const translateResponse = await fetch('http://localhost:5000/translate-file', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ filepath, lang: 'en' }), // Hardcoding lang for now
+      });
+
+      if (!translateResponse.ok) {
+        throw new Error('Translation failed');
+      }
+
+      const translateData = await translateResponse.json();
+      setTranslatedText(translateData.translated_text);
+      setDownloadPath(translateData.download_path);
+      setError('');
+    } catch (error) {
+      console.error("Error:", error);
+      setError(error.message || "An error occurred.");
+      setTranslatedText('');
+      setDownloadPath('');
     }
   };
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Welcome Translator</h1>
-        <div className="input-container">
-          <input
-            id="language-input"
-            type="text"
-            placeholder="Enter language (e.g., es, fr, de)"
-            defaultValue={language}
-          />
-          <button onClick={handleTranslate}>Translate</button>
+        <h1>Document Translator</h1>
+      </header>
+      <div className="container">
+        <div className="panel upload-section">
+          <input type="file" onChange={handleFileChange} />
         </div>
-        <div className="translation-container">
-          {error ? (
-            <p className="error-text">{error}</p>
-          ) : (
-            <>
-              <h2>Translated "Welcome":</h2>
-              <p className="translated-text">{translatedText}</p>
-            </>
+        <div className="panel">
+          <h2>Translated Text</h2>
+          {error && <p className="error-text">{error}</p>}
+          <div className="translation-output">{translatedText}</div>
+          {downloadPath && (
+            <a href={`http://localhost:5000/download/${downloadPath.split('/').pop()}`} download>
+              <button>Download as PDF</button>
+            </a>
           )}
         </div>
-      </header>
+      </div>
     </div>
   );
 }
